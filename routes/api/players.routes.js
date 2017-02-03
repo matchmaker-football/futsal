@@ -5,9 +5,11 @@ var controller = require('../../controllers/players.controller.js')
 
 
 // GET ALL PLAYER
-router.get('/', controller.getAllPlayer)
+router.get('/all', controller.getAllPlayer)
 
 router.get('/:username', controller.verifyPlayer, controller.getSinglePlayer)
+
+router.get('/pos/:position', controller.getPlayerByPos)
 
 router.post('/signin', controller.signIn)
 
