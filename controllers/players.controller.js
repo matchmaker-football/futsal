@@ -60,7 +60,7 @@ module.exports = {
           res.send('Player not found')
         }
         else if(hash.verify(req.body.password,data.password)){
-          var token = jwt.sign({ username: data.username }, process.env.SECRET, {expiresIn : 60*60});
+          var token = jwt.sign({ id: data._id, username: data.username }, process.env.SECRET, {expiresIn : 60*60});
           res.json({token: token})
         }
         else{

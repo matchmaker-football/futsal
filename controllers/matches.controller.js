@@ -3,7 +3,7 @@ const config = require('../config');
 const googleMapsClient = require('@google/maps').createClient({
   key: config.googleKey
 });
-
+const jwt = require('jsonwebtoken')
 module.exports = {
   createMatch: function(req,res) {
     var venue = {query:req.body.venue}
@@ -41,6 +41,24 @@ module.exports = {
         matches: data
       })
     })
+  },
+  joinMatch: function(req,res) {
+    var decode = jwt.verify(req.header('token'), process.env.SECRET)
+    if(decode) {
+      Match.update(
+        {_id: req.body.matchid},
+        {$push: {players:decode.id}},
+        {upsert:true}
+      ).then(function(data) {
+        res.send({
+          message: "success add player",
+          matches: data
+        })
+      })
+    }
+    else if (!decode){
+      res.send('YOU MUST LOGIN FIRST')
+    }
   }
 
 }
