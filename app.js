@@ -8,6 +8,8 @@ var mongoose = require('mongoose')
 var index = require('./routes/index');
 var users = require('./routes/users');
 var matches = require('./routes/matches')
+var apiPlayer = require('./routes/api/players.routes')
+require('dotenv').config()
 mongoose.connect('mongodb://localhost/futsal');
 mongoose.Promise = global.Promise
 
@@ -25,9 +27,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// routes
 app.use('/', index);
 app.use('/users', users);
 app.use('/api/match', matches);
+app.use('/api/players', apiPlayer)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
