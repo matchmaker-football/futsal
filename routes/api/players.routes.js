@@ -7,7 +7,7 @@ var controller = require('../../controllers/players.controller.js')
 // GET ALL PLAYER
 router.get('/', controller.getAllPlayer)
 
-router.get('/:username', controller.getSinglePlayer)
+router.get('/:username', controller.verifyPlayer, controller.getSinglePlayer)
 
 router.post('/signin', controller.signIn)
 

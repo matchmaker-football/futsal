@@ -49,7 +49,7 @@ module.exports = {
           res.send('Player not found')
         }
         else if(hash.verify(req.body.password,data.password)){
-          var token = jwt.sign({ username: data.username, email: data.email }, process.env.SECRET, {expiresIn : 60*60});
+          var token = jwt.sign({ username: data.username }, process.env.SECRET, {expiresIn : 60*60});
           res.json({token: token})
         }
         else{
@@ -57,6 +57,20 @@ module.exports = {
         }
     })
   },
+
+  // --------- Verify ---------------
+  verifyPlayer : function (req, res, next) {
+    var decode = jwt.verify(req.header('token'), process.env.SECRET)
+
+    if (decode && decode.username){
+      next()
+    }
+    else{
+      res.send('Wrong Token')
+    }
+
+  }
+
 
 
 }
