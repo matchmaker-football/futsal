@@ -4,18 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-require('dotenv').config()
-
-// require for routes
-var index     = require('./routes/index');
-var users     = require('./routes/users');
+var mongoose = require('mongoose')
+var index = require('./routes/index');
+var users = require('./routes/users');
+var matches = require('./routes/matches')
 var apiPlayer = require('./routes/api/players.routes')
-
-// mongoose
-var mongoose = require('mongoose');
+require('dotenv').config()
 mongoose.connect('mongodb://localhost/futsal');
-mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise
 
 var app = express();
 
@@ -34,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/', index);
 app.use('/users', users);
+app.use('/api/matches', matches);
 app.use('/api/players', apiPlayer)
 
 // catch 404 and forward to error handler
