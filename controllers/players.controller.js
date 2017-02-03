@@ -9,7 +9,11 @@ module.exports = {
 
   /** GET ALL Player **/
   getAllPlayer : function (req, res) {
-    player.find( {}, (err, data) => {
+    player.find( {}, {
+          _id       : false,
+          password  : false,
+          __v       : false}
+      , (err, data) => {
       res.json(data)
     })
   },
@@ -21,12 +25,19 @@ module.exports = {
     })
   },
 
+  /** getPlayerByPos **/
+  getPlayerByPos : function (req, res) {
+    player.find( {position: req.params.position.toLowerCase() }, (err, data) => {
+      res.json(data)
+    })
+  },
+
   /** SIGN UP **/
   signUp : function (req, res, next) {
     player.create({
         username: req.body.username,
         password: hash.generate(req.body.password),
-        position: req.body.position,
+        position: req.body.position.toLowerCase(),
         address: req.body.address,
         phone: req.body.phone
       })
@@ -62,7 +73,7 @@ module.exports = {
   verifyPlayer : function (req, res, next) {
     var decode = jwt.verify(req.header('token'), process.env.SECRET)
 
-    if (decode && decode.username){
+    if (decode && decode.username == req.params.username){
       next()
     }
     else{

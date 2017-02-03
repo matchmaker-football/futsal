@@ -14,7 +14,7 @@ var apiPlayer = require('./routes/api/players.routes')
 
 // mongoose
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/futsal');
 mongoose.Promise = global.Promise;
 
 var app = express();
