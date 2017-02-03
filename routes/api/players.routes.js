@@ -15,5 +15,9 @@ router.post('/signin', controller.signIn)
 
 router.post('/signup', controller.signUp)
 
+// router.put('/update', controller.update)
+
+router.delete('/:username', controller.deletePlayer)
+
 
 module.exports = router;

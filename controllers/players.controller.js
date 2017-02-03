@@ -69,6 +69,14 @@ module.exports = {
     })
   },
 
+  /** DELETE **/
+  deletePlayer : function(req,res){
+    player.findOneAndRemove( {username: req.params.username}, function(err){
+      res.send('Player has been removed')
+    })
+  },
+
+
   // --------- Verify ---------------
   verifyPlayer : function (req, res, next) {
     var decode = jwt.verify(req.header('token'), process.env.SECRET)
