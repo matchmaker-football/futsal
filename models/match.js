@@ -3,8 +3,7 @@ let Schema = mongoose.Schema;
 
 let matchSchema = new Schema({
   name: String,
-  playerid: [{type: Schema.Types.ObjectId,ref:'Players'}],
-  matchmaker : String,
+  players: [{type: Schema.Types.ObjectId,ref:'Players'}],
   venue:
   {
     name: String,

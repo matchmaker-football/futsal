@@ -15,18 +15,17 @@ module.exports = {
         var addr = response.json.results[0].formatted_address
         var open = response.json.results[0].opening_hours.open_now
         var vname = response.json.results[0].name
-        var newMatch = Match({
-         name: req.body.name,
-         matchmaker: req.body.makerid,
-         venue:
-         {
-           name: vname,
-           address:addr,
-           long: longitude,
-           lat:latitude
-         },
-         matchDate: req.body.date
-       });
+        var newMatch = new Match()
+        newMatch.name= req.body.name,
+        newMatch.players.push(req.body.playerid),
+        newMatch.venue=
+        {
+          name: vname,
+          address:addr,
+          long: longitude,
+          lat:latitude
+        },
+        newMatch.matchDate= req.body.date
 
        newMatch.save(function(err){
          if(err) throw err;
@@ -36,7 +35,7 @@ module.exports = {
     })
   },
   getAllMatch: function(req,res) {
-    Match.find({}).then(function(data) {
+    Match.find({}).populate('players',{password:false,__v:false,updatedAt:false,createdAt:false}).then(function(data) {
       res.send({
         message: 'Show all Matches',
         matches: data
