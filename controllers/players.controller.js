@@ -40,5 +40,23 @@ module.exports = {
           phone: data.phone
         })
       })
-  }
+  },
+
+  /** SIGN IN **/
+  signIn : function(req,res,next) {
+      player.findOne({username: req.body.username}).then(function(data) {
+        if (data == null) {
+          res.send('Player not found')
+        }
+        else if(hash.verify(req.body.password,data.password)){
+          var token = jwt.sign({ username: data.username, email: data.email }, process.env.SECRET, {expiresIn : 60*60});
+          res.json({token: token})
+        }
+        else{
+          res.send('invalid username or password')
+        }
+    })
+  },
+
+
 }

@@ -9,7 +9,7 @@ router.get('/', controller.getAllPlayer)
 
 router.get('/:username', controller.getSinglePlayer)
 
-// router.post('/signin', controller.signIn)
+router.post('/signin', controller.signIn)
 
 router.post('/signup', controller.signUp)
 

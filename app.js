@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+require('dotenv').config()
+
 // require for routes
 var index     = require('./routes/index');
 var users     = require('./routes/users');
