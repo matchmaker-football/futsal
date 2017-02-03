@@ -4,9 +4,8 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var playersSchema = new Schema({
-  name: String,
-  email: String,
-  password: String,
+  username: { type: String, required: true, unique: true},
+  password: { type: String, required: true},
   position: String,
   address: String,
   phone: String

@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// require for routes
 var index     = require('./routes/index');
 var users     = require('./routes/users');
 var apiPlayer = require('./routes/api/players.routes')
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// routes
 app.use('/', index);
 app.use('/users', users);
 app.use('/api/players', apiPlayer)
