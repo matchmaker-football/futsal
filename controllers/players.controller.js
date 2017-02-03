@@ -76,6 +76,18 @@ module.exports = {
     })
   },
 
+  /** UPDATE **/
+  updatePlayer :function(req, res, next) {
+    player.findOneAndUpdate({username: req.params.username}, req.body, {new: true}).then( (data) => {
+        res.send({message :`player ${req.params.username} has been updated`,
+        username:data.username,
+        password:'[ENCRYPTED]',
+        position: data.position,
+        address: data.address,
+        phone: data.phone
+      })
+    })
+  },
 
   // --------- Verify ---------------
   verifyPlayer : function (req, res, next) {
