@@ -5,9 +5,11 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 const jwt = require('jsonwebtoken')
 module.exports = {
+
   createMatch: function(req,res) {
+    var decode = jwt.verify(req.header('token'), process.env.SECRET)
+    if(decode) {
     var venue = {query:req.body.venue}
-    console.log(venue);
     googleMapsClient.places(venue, function(err, response) {
       if (!err) {
         var latitude = response.json.results[0].geometry.location.lat
@@ -17,7 +19,7 @@ module.exports = {
         var vname = response.json.results[0].name
         var newMatch = new Match()
         newMatch.name= req.body.name,
-        newMatch.players.push(req.body.playerid),
+        newMatch.players.push(decode.id),
         newMatch.venue=
         {
           name: vname,
@@ -33,6 +35,7 @@ module.exports = {
        })
       }
     })
+  }
   },
   getAllMatch: function(req,res) {
     Match.find({}).populate('players',{password:false,__v:false,updatedAt:false,createdAt:false}).then(function(data) {
